@@ -36,7 +36,7 @@ def main():
         #     cur += prime
         cur = prime * 2
         if cur < a:
-            cur = a - a % prime
+            cur = a + ((prime - a % prime) % prime)
         while block.validate(cur):
             block[cur] = False
             cur += prime
