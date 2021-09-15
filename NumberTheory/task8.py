@@ -24,24 +24,34 @@ class Arr:
 
 def main():
     a, b = [int(x) for x in sys.stdin.read().split()]
+    if a < 2:
+        a = 2
     block = Arr(a, b)
     seq = Arr(2, int(math.sqrt(b)+2))
 
     prime = 2
     while seq.validate(prime):
-        cur = a - a % prime
-        if a % prime != 0 or a == 0:
-            cur += prime
+        # cur = a - a % prime
+        # if a % prime != 0 or a == 0:
+        #     cur += prime
+        cur = prime * 2
+        if cur < a:
+            cur = a - a % prime
         while block.validate(cur):
             block[cur] = False
             cur += prime
+
+        # for i in range(block.a, block.b):
+        #     if block[i]:
+        #         print(i, end=' ')
+        # print()
 
         cur = prime*2
         while seq.validate(cur):
             seq[cur] = False
             cur += prime
-        cur = prime+1
 
+        cur = prime+1
         while seq.validate(cur):
             if seq[cur]: break
             cur += 1
