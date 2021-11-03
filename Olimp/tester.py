@@ -6,23 +6,27 @@ def run_test(tested_program_path, test_in_path, test_out_path):
     with open(test_in_path, 'r') as f:
         test_in_data = f.read().replace('\n', ' ')
     result = subprocess.run([f'python', f'{tested_program_path}'], input=test_in_data.encode('utf-8'), stdout=subprocess.PIPE).stdout\
-        .decode("utf-8").replace('\n', ' ')
-    result = result.replace('\r', '')
+        .decode("utf-8")
+    result = result.split()
     with open(test_out_path) as f:
         test_out_data = f.read()
-    test_out_data = test_out_data.replace('\n', ' ')
+    test_out_data = test_out_data.split()
     return result == test_out_data, test_out_data, result
 
 def run_test_set(tested_program_path, test_setPath):
     for cur, dirs, files in os.walk(test_setPath):
         files = [x for x in files if not '.a' in x]
+        i = 0
+        passed = 0
         for test in files:
+            i += 1
             res, exp, act = run_test(tested_program_path, test_setPath+'/'+test, test_setPath+'/'+test+'.a')
             if res:
-                print(test, 'ok')
+                print(i, 'ok')
+                passed += 1
             else:
-                print(test, 'wrong answer')
-                print(f'exp: {exp}\nact: {act}')
+                print(i, 'wrong answer', f'exp: {exp} act: {act}')
+        print(f'passed {passed} of {i}')
 
 
 def main():
