@@ -42,8 +42,8 @@ def check_answer_2(exp, act):
   return True
 
 def main():
-    prog = './municip2021/problem2.py'
-    test_set = './municip2021/2/tests'
+    prog = './municip2021/problem3.py'
+    test_set = './municip2021/3/tests'
     run_test_set(prog, test_set)
 
 main()
