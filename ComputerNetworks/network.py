@@ -14,20 +14,53 @@ class Network:
         result[node_id] = nodes[node_id]
       else:
         node = self.get_node(node_id)
-        result[node_id] = node[0]([result[n] for n in node[1]])
+        result[node_id] = node[0][0]([result[n] for n in node[1]])
     return result
 
   def get_node(self, node_id):
     return self.node_array[node_id]
 
-# foo = Network()
-# node0 = foo.node(sum, [])
-# node3 = foo.node(sum, [node0])
-# node2 = foo.node(sum, [node0])
-# node1 = foo.node(sum, [node0])
-# node5 = foo.node(sum, [node2, node1])
-# node4 = foo.node(sum, [node3, node5])
-# print(foo.values([(0,1), (1, 5)]))
+  def derivatives(self, values, node_id):
+    node = self.get_node(node_id)
+    return node[0][1](values)
 
-import sys
-exec(sys.stdin.read())
+def sum_gradient(inputs):
+  return [1 for _ in inputs]
+def product(inputs):
+  result = 1
+  for x in inputs: result *= x
+  return result
+def product_gradient(inputs):
+  return [ product(inputs[:i]+inputs[i+1:])
+           for i in range(len(inputs)) ]
+
+ADD = (sum, sum_gradient)
+MUL = (product, product_gradient)
+
+# foo = Network()
+# node0 = foo.node(MUL, [])
+# node3 = foo.node(MUL, [node0])
+# node2 = foo.node(MUL, [node0])
+# node1 = foo.node(MUL, [node0])
+# node5 = foo.node(MUL, [node2, node1])
+# node4 = foo.node(MUL, [node3, node5])
+# values = foo.values([(0,1), (1, 5)])
+# print(product_gradient(values))
+
+trinome = Network()
+one = trinome.node( None, [] )
+x   = trinome.node( None, [] )
+x_2 = trinome.node( MUL, [x, x] )
+_3x = trinome.node( ADD, [x, x, x] )
+_2_ = trinome.node( ADD, [one, one] )
+result = trinome.node( ADD, [x_2, _3x, _2_] )
+values = trinome.values([(one, 1), (x, 5)])
+
+print(trinome.derivatives(values, result))
+## [ 2, 13, 1, 1, 1, 1 ]
+
+print(trinome.derivatives(values, x_2))
+## [ 0, 10, 1, 0, 0, 0 ]
+
+# import sys
+# exec(sys.stdin.read())
