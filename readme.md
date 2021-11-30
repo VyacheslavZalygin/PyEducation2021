@@ -1,1 +1,1 @@
-My python scripts written during the training of the proing course
+My python scripts written during the training of the programming course.
