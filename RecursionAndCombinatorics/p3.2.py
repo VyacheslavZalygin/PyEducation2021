@@ -1,7 +1,7 @@
 import sys
 
-l, n = [int(x) for x in sys.stdin.read().split()]
-if l == n:
-  print(1)
-elif l > n:
-  print(0)
+def fac(n):
+  return n * fac(n-1) if n > 0 else 1
+
+k, n = [int(x) for x in sys.stdin.read().split()]
+print(fac(n)//(fac(n-k)*fac(k)))
