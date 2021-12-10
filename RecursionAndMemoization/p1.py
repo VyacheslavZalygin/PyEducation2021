@@ -13,7 +13,7 @@ def f(n):
     return 5
   if n % 2 == 1:
     return f(n-1)
-  return f(n-1)*2
+  return f(n-1)*2 + f(n-2)
 
 n = [int(x) for x in sys.stdin.read().split()][0]
 print(2**(n-1))
