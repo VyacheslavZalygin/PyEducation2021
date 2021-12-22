@@ -1,15 +1,10 @@
 import sys
 
-def options(length, number):
-  if length == 1:
-    return [number]
-  return [x for x in range(1, number-length+2)]
-
 def sequence(length, number):
-	if length == 0: 
-		return [[]]
+	if length == 1:
+		return [[number]]
 	return [[head, *tail]
-				 for head in options(length, number)
+				 for head in range(1, number-length+2)
 				 for tail in sequence(length-1, number-head)]
 
 l, n = [int(x) for x in sys.stdin.read().split()]
