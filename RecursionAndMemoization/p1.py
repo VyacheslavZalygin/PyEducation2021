@@ -1,19 +1,20 @@
 import sys
 
+table = {}
+
+def cache(arg, func):
+  if arg not in table:
+    table[arg] = func(arg)
+  return table[arg]
+
 def f(n):
-  if n == 1:
-    return 1
-  if n == 2:
-    return 2
-  if n == 3:
-    return 2
-  if n == 4:
-    return 5
-  if n == 5:
-    return 5
-  if n % 2 == 1:
-    return f(n-1)
-  return f(n-1)*2 + f(n-2)
+  if n == -1: return 0
+  if n == 0 or n == 1: return 1
+  return cache(n-1, f) + cache(n-2, f)
 
 n = [int(x) for x in sys.stdin.read().split()][0]
-print(2**(n-1))
+print(f(n))
+
+# 1 1
+# 2 2
+# 3 3
