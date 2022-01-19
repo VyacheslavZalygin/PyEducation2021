@@ -7,9 +7,10 @@ def divisors(n):
             if d*d != n:
                 ds.append(n//d)
         d += 1
+    ds.sort()
     return ds
 
 def is_prime(n):
     return len(divisors(n)) == 2
 
-print(is_prime(5))
+print(divisors(9))
