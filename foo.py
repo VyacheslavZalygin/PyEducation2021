@@ -1,8 +1,7 @@
-print("l k b a")
-for l in range(1, 20):
-  for k in range(1, 20):
-    if l*k != 16:
-      b = (1+3*l)/(16-l*k)
-      if b > 0 and b.is_integer():
-        a = (b*k+3)/4
-        print(l, k, int(b), a)
+print('x y z w')
+for x in range(2):
+  for y in range(2):
+    for z in range(2):
+      for w in range(2):
+        if (((y <= x) and (z or w)) <= ((x and not(w)) or (y == z))) == 0:
+          print(x, y, z, w)
