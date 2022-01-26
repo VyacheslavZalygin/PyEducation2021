@@ -1,11 +1,18 @@
 import sys
 
-# Считает кол-во требуемых яиц при бросании
-def func()
-
-
 # n - яйца, k - этажи
-n, k = [int(x) for x in sys.stdin.read().split()]
+n_max, k_max = [int(x) for x in sys.stdin.read().split()]
+table = {}
+
+# Считает кол-во требуемых яиц при бросании
+# Бросить яйцо, если разбилось, то кинуть ниже, если не разбилось, то кинуть выше
+def eggs_required(n, k):
+    if k == 0 or k == k_max: return 1
+    elif n == 0: return 0
+    return max(eggs_required(n-1, k-1)+1,
+               eggs_required(n, k+1))
+
+print(min([eggs_required(n_max, k) for k in range(k_max)]))
 
 # бросить с любого этажа, посчитать, сколько нужно, если оно разбилось, сколько нужно, чтобы оно не разбилось - выбрать максимальное
 # тоже самое для любого другого этажа, найти минимальное (самой оптимальный алгоритм)
