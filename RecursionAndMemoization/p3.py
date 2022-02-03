@@ -1,5 +1,8 @@
 import sys
 
+EGG_BROKE = 0
+EGG_DIDNT_BRAKE = 1
+
 # n - яйца, k - этажи
 n_max, k_max = [int(x) for x in sys.stdin.read().split()]
 table = {}
@@ -18,3 +21,5 @@ print(min([eggs_required(n_max, k) for k in range(k_max)]))
 # тоже самое для любого другого этажа, найти минимальное (самой оптимальный алгоритм)
 # если яйцо не разбилось - можно использовать ещё раз
 # минимум среди максимов
+
+# f(я, э) => max(1 + min_x (0 <= x <= я+1) (f(я-1, x), f(я, э-1-x) ))
