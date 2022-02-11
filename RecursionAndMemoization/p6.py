@@ -11,22 +11,16 @@ def grundy_function(table, v):
 	return result
 
 # строит граф
-def solve(vs, table=None):
-    if table is None:
-        table = {}
-    for i, v in enumerate(vs):
-        table[vs] = [(
-            *vs[:i], 
-            *((j, v-j-2) if j != 0 else (v-j-2,)), 
-            *vs[i+1:]) 
-                for j in range(0, (v-2)//2+1)]
-    a = set()
-    for n_vs in table[vs]:
-        if n_vs not in table:
-            a.add(solve(n_vs, table))
+def solve(vs):
+    a = []
+    a = [[(*vs[:i],  *((j, v-j-2) if j != 0 else (v-j-2,)), *vs[i+1:]) 
+            for j in range(0, (v-2)//2+1)] for i, v in enumerate(vs)]
+    b = set()
+    for n_vs in a:
+        b.add(solve(n_vs))
     res = 0
-    while res in a: res += 1 
+    while res in b: res += 1
     return res
 
 N = (int(sys.stdin.read()),)
-print(2 if solve(N) == 0 else 1)
+print(solve(N))
