@@ -1,24 +1,24 @@
 import sys
 
 def divs(n):
-  i = 2
+  i = 1
   a = []
-  while i*i < n and len(a) < 3:
+  while i*i <= n:
     if n % i == 0:
       a.append(i)
-      if n//i != i:
+      if i**2 != n:
         a.append(n//i)
     i += 1
-  if len(a) == 3: return max(a)
-  return len(a)
+  return a
 
-# a, b = [int(x) for x in sys.stdin.read().split()]
-# count = 0
-# for n in range(a, b+1):
-#   res = divs(n)
-#   if res != False:
-#     print(n, res)
-#     count += 1
-# if count == 0:
-#   print(None)
-print(divs(2*3*5))
+a, b = [int(x) for x in sys.stdin.read().split()]
+count = 0
+n = int(a**0.25)
+while n**4 <= b:
+  if len(divs(n)) == 2:
+    if n**4 >= a:
+      print(n**4, n**3)
+      count += 1
+  n += 1
+if count == 0:
+  print(None)
