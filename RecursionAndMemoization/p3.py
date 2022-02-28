@@ -1,20 +1,23 @@
 import sys
 
+sys.setrecursionlimit(20000)
 # n - яйца, k - этажи
-n_max, k_max = [int(x) for x in sys.stdin.read().split()]
+def eggs(n, k):
+    if k == 1: return 1
+    return 1+min([max(eggs(n-1, x), eggs(n, k-x-1)) for x in range(0, k)])
+
 table = {}
+temp = eggs
+def eggs(n, k):
+    if (n, k) not in table:
+        table[(n, k)] = temp(n, k)
+    return table[(n, k)]
 
-# Считает кол-во требуемых яиц при бросании
-# Бросить яйцо, если разбилось, то кинуть ниже, если не разбилось, то кинуть выше
-def eggs_required(n, k):
-    if k == 0 or k == k_max: return 1
-    elif n == 0: return 0
-    return max(eggs_required(n-1, k-1)+1,
-               eggs_required(n, k+1))
-
-print(min([eggs_required(n_max, k) for k in range(k_max)]))
+print(eggs(*[int(x) for x in sys.stdin.read().split()]))
 
 # бросить с любого этажа, посчитать, сколько нужно, если оно разбилось, сколько нужно, чтобы оно не разбилось - выбрать максимальное
 # тоже самое для любого другого этажа, найти минимальное (самой оптимальный алгоритм)
 # если яйцо не разбилось - можно использовать ещё раз
 # минимум среди максимов
+
+# f(я, э) => min(1 + max_x (0 <= x <= э+1) (f(я-1, x), f(я, э-1-x) ))
