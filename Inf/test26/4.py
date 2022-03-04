@@ -9,15 +9,8 @@ for e in inp:
   if e > 50: great.append(e)
   else: less.append(e)
 
-prices = less
-n = 1
-m = 0
-while len(great) != 0:
-  if n % 2 == 1:
-    prices.append(great.pop(-1))
-  else:
-    e = great.pop(0)
-    m = max(m, e)
-    prices.append(discount(e))
-  n += 1
-print(sum(prices), m)
+great = sorted(great)
+with_d, without_d = great[:len(great)//2], great[len(great)//2:]
+prices = less + without_d + [discount(x) for x in with_d]
+
+print(sum(prices), with_d[-1])
