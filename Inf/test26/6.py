@@ -1,6 +1,6 @@
 import sys
 
-inpt = sys.stdin.read().split()[1:]
+inpt = sys.stdin.read().split()
 pairs = [(int(inpt[i]), int(inpt[i + 1]))
          for i in range(0, len(inpt), 2)]
 
