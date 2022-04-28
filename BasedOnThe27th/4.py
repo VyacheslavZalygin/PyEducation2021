@@ -21,12 +21,14 @@ for string in data:
 
 # print(m_data[0])
 
-res = [m_data[0][x] for x in m_data[0] if x > len(data)//2]
+res = []
+for even in m_data[0]:
+    odd = len(data)-even
+    s = m_data[0][even]
+    if (even > odd and s % 2 == 0) or (odd > even and s % 2 == 1):
+        res.append(s)
+
 if len(res) != 0:
     print(max(res))
 else:
-    print("NO")
-
-# 1 2 3
-# 12 29
-# 1 16
+    print('NO')
