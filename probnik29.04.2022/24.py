@@ -9,6 +9,9 @@ for e in data:
         curr += 2
     elif curr > 0 and e == 'A':
         curr += 1
+        if m == None or m < curr:
+            m = curr
+        curr = 0
     else:
         if m == None or m < curr:
             m = curr
