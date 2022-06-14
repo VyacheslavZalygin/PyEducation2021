@@ -1,6 +1,3 @@
-from tkinter import N
-
-
 def get_network(ip, mask):
     return tuple(ip_oct & mask_oct \
                     for ip_oct, mask_oct in zip(ip, mask))
@@ -21,7 +18,10 @@ for ip in ips:
         count, ips = ntws[ntw]
         ntws[ntw] = (count+1, ips | {ip})
 
-ntw = sorted([(x, ntws[x]) for x in ntws], \
-                key=lambda y: (-y[1][0], y[0]))[0]
+ntws = sorted([(x, ntws[x]) for x in ntws], \
+                key=lambda y: (-y[1][0], y[0]))
 
-print('.'.join(map(str, ntw[0])), len(ntw[1][1]))
+tmp = list(map(lambda x: (x[0], x[1][0], len(x[1][1])), ntws))[:10]
+for x in tmp:
+    print(x)
+# print('.'.join(map(str, ntw[0])), len(ntw[1][1]))
